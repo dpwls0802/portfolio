@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="www.spring.com.board.mapper.ReplyMapper">
+	<resultMap id="rm4ReplyVO"
+		type="www.spring.com.board.model.ReplyVO">
+		<id property="rno" column="rno" />
+		<result property="bno" column="bno" />
+		<result property="content" column="content" />
+		<result property="replyer" column="replyer" />
+		<result property="regdate" column="regdate" />
+		<result property="updatedate" column="updatedate" />
+	</resultMap>
+	
+	<select id="getTotalCount" resultType="int">
+		<![CDATA[
+			select count(*) from tbl_reply where bno = #{bno}
+		]]>
+	</select>
+	
+	<select id="getReply" resultMap="rm4ReplyVO">
+		<![CDATA[
+			select * from tbl_reply where rno = #{rno}
+		]]>
+	</select>
+
+	<select id="getOldestReply" resultType="int">
+		<![CDATA[
+			select min(rno) from tbl_reply
+		]]>
+	</select>
+
+	<select id="getOldestBoardIdHavingReply" resultType="int">
+		<![CDATA[
+			select min(bno) from tbl_reply
+		]]>
+	</select>
+
+	<select id="getListReplyOfBoard" resultMap="rm4ReplyVO">
+		<![CDATA[
+			select * from tbl_reply where bno = #{bno}
+		]]>
+	</select>
+
+	<select id="getPagingReplyOfBoard" resultMap="rm4ReplyVO">
+		<!-- oracle hint를 쓰지 않고 특정 페이지에 해당하는 정보 조회 -->
+		<![CDATA[
+			select * 
+			  from (
+			  	select rownum rn, r.*
+			  	  from (
+			  	       select *
+			  	  		 from tbl_reply r0
+			  	 		where r0.bno = #{bno} 
+					    order by rno asc
+			  	  ) r
+			  	 where rownum <= #{cri.pageNum} * #{cri.amount}
+			  )
+			 where rn > (#{cri.pageNum} - 1) * #{cri.amount}
+		]]>
+	</select>
+	
+	<insert id="insertReply">
+		<!-- 생성된 identifier가 주어진 객체에 자동적으로 채워진다. -->
+		<selectKey keyProperty="rno" resultType="int" order="BEFORE">
+			select seq_reply.nextval FROM DUAL
+		</selectKey>
+  		insert into tbl_reply(rno, bno, content, replyer)
+		  values(#{rno}, #{bno}, #{content,jdbcType=VARCHAR}, #{replyer,jdbcType=VARCHAR})
+	</insert>
+	
+	<update id="updateReply">
+		<selectKey keyProperty="updatedate" resultType="date" order="BEFORE">
+			select sysdate FROM DUAL
+		</selectKey>
+		<![CDATA[
+			update tbl_reply
+			   set content = #{content},
+				   updatedate = #{updatedate}
+ 			 where rno = #{rno}
+		]]>
+	</update>
+	
+	<delete id="deleteReply">
+		<![CDATA[
+			delete from tbl_reply where rno=#{rno}
+		]]>
+	</delete>
+
+	<delete id="deleteReplyOfBoard">
+		<![CDATA[
+			delete from tbl_reply where bno=#{bno}
+		]]>
+	</delete>
+	
+</mapper>
+
+
+
+
+
+
+
+

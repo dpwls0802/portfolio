@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="www.spring.com.party.mapper.PartyMapper">
+	<resultMap id="rm4PartyVO"
+		type="www.spring.com.party.model.PartyVO">
+		<id property="userId" column="user_id" />
+		<result property="userPwd" column="user_pwd" />
+		<result property="name" column="name" />
+		<result property="regDate" column="reg_date" />
+		<result property="updateDate" column="update_date" />
+		<result property="enabled" column="enabled" />
+		<!-- PartyVO의  listAuth 속성에 Outer Join으로 읽은 AuthVO를 목록으로 담기
+		1:N (Master-Detail 구조) 정보를 한번에 읽어 객체를 구성하기
+		성능 향상 -->
+		<collection property="listAuth" 
+			column="party_id" 
+			javaType="java.util.ArrayList"
+			resultMap="rm4AuthVO"
+		/>
+	</resultMap>
+
+	<resultMap id="rm4AuthVO" type="www.spring.com.party.model.AuthVO">
+		<!-- id는 DB에서 읽은 정보 중 mybatis가 객체로 만들 때 중복성을 검사하여
+		동일한 것은 다시 만들지 않도록 제어해 준다. 따라서 특정 사용자의 권한이 여러개 일 때
+		partyId를 id로 지정하면 하나의 권한만이 읽혀집니다
+		tag id의 역할과 table의 primary key의 역할이 다름을 인지하자 
+		 -->
+		<id property="partyId" column="party_id" />
+		<id property="auth" column="auth" />
+	</resultMap>
+
+	<select id="getParty" resultMap="rm4PartyVO">
+		<![CDATA[
+			select * 
+			  from tbl_party p LEFT OUTER JOIN tbl_authority a
+			       on p.user_id = party_id 
+			 where p.user_id = #{userId}
+		]]>
+	</select>
+	
+	<insert id="insertParty">
+		<![CDATA[
+	  		insert into tbl_party(user_id, user_pwd, name)
+			  values(#{userId}, #{userPwd}, #{name,jdbcType=VARCHAR})
+		]]>
+	</insert>
+
+	<insert id="insertAuthority">
+		<![CDATA[
+	  		insert into tbl_authority(party_id, auth)
+			  values(#{partyId}, #{auth})
+		]]>
+	</insert>
+	
+</mapper>
+
+
+
+
+
+
+
+
