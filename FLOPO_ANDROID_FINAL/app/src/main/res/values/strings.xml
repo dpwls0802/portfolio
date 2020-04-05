@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">MAP</string>
-    <string name="kakao_app_key">c3cc19238ba294200177e35507659072</string>
+    <string name="kakao_app_key">c3cc19238ba294200177e35507659072</string><!--예진-->
+    <!--<string name="kakao_app_key">c8b7c2277d68c2d04552b12a0db4e412</string> -->
 
 
     <string name="navigation_drawer_open">Open navigation drawer</string>

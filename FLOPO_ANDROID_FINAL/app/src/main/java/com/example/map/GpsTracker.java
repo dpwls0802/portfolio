@@ -14,12 +14,13 @@ import android.util.Log;
 
 import androidx.core.content.ContextCompat;
 
+
 public class GpsTracker extends Service implements LocationListener {
 
     private final Context mContext;
     Location location;
-    double latitude;
-    double longitude;
+    double latitude;    //위도
+    double longitude;   //경도
 
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;
     private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1;
@@ -31,6 +32,7 @@ public class GpsTracker extends Service implements LocationListener {
     }
 
     public Location getLocation() {
+
         try {
             locationManager = (LocationManager) mContext.getSystemService(LOCATION_SERVICE);
 
@@ -77,22 +79,21 @@ public class GpsTracker extends Service implements LocationListener {
                     }
                 }
             }
-        }
-        catch (Exception e) {
-            Log.d("@@@", ""+e.toString());
+        } catch (Exception e) {
+            Log.d("@@@", "" + e.toString());
         }
         return location;
     }
 
     public double getLatitude() {
-        if(location != null) {
+        if (location != null) {
             latitude = location.getLatitude();
         }
         return latitude;
     }
 
     public double getLongitude() {
-        if(location != null) {
+        if (location != null) {
             longitude = location.getLongitude();
         }
         return longitude;
@@ -120,7 +121,7 @@ public class GpsTracker extends Service implements LocationListener {
     }
 
     public void stopUsingGPS() {
-        if(locationManager != null) {
+        if (locationManager != null) {
             locationManager.removeUpdates(GpsTracker.this);
         }
     }

@@ -11,6 +11,9 @@ import com.kakao.auth.ISessionConfig;
 import com.kakao.auth.KakaoAdapter;
 import com.kakao.auth.KakaoSDK;
 
+/**
+ * GlobalApplication : 이미지를 캐시를 앱 수준에서 관리하기 위한 어플리케이션 객체.
+ */
 
 public class GlobalApplication extends Application {
     private static volatile GlobalApplication instance = null;
@@ -21,6 +24,7 @@ public class GlobalApplication extends Application {
          * 필요한 상황에서만 override해서 사용하면 됨.
          * @return Session의 설정값.
          */
+
         // 카카오 로그인 세션을 불러올 때의 설정값을 설정하는 부분.
         public ISessionConfig getSessionConfig() {
 
@@ -66,7 +70,7 @@ public class GlobalApplication extends Application {
 
         @Override
         public IApplicationConfig getApplicationConfig() {
-            return new IApplicationConfig() {
+            return new IApplicationConfig() { //KakaoAdapter의 getApplicationConfig() 메소드 통해 Kakao SDK에 애플리케이션 컨텍스트를 제공.
                 @Override
                 public Context getApplicationContext() {
                     return GlobalApplication.getGlobalApplicationContext();
@@ -75,15 +79,15 @@ public class GlobalApplication extends Application {
         }
     }
 
-    public static GlobalApplication getGlobalApplicationContext() {
+    public static GlobalApplication getGlobalApplicationContext() { //singleton 어플리케이션 객체를 얻는다.
         if(instance == null) {
             throw new IllegalStateException("this application does not inherit com.kakao.GlobalApplication");
         }
-        return instance;
+        return instance; //singleton 어플리케이션 객체
     }
 
     @Override
-    public void onCreate() {
+    public void onCreate() { //이미지 로더, 이미지 캐시, 요청 큐를 초기화한다.
         super.onCreate();
         instance = this;
 
@@ -91,7 +95,7 @@ public class GlobalApplication extends Application {
     }
 
     @Override
-    public void onTerminate() {
+    public void onTerminate() { //어플리케이션 종료 시 singleton 어플리케이션 객체 초기화
         super.onTerminate();
         instance = null;
     }

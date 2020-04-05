@@ -9,35 +9,51 @@
         android:id="@+id/nav_home"
         android:name="com.example.map.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_nav_home_to_nav_notice"
+            app:destination="@id/nav_notice" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_people"
+            app:destination="@id/nav_people" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_logout"
+            app:destination="@id/nav_logout" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_board2"
+            app:destination="@id/nav_board" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_information"
+            app:destination="@id/nav_information" />
+    </fragment>
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.map.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_notice"
+        android:name="com.example.map.ui.notice.NoticeFragment"
+        android:label="공지사항"
+        tools:layout="@layout/fragment_notice" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.map.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_board"
+        android:name="com.example.map.ui.board.BoardFragment"
+        android:label="게시판"
+        tools:layout="@layout/fragment_board" />
 
     <fragment
-        android:id="@+id/nav_tools"
-        android:name="com.example.map.ui.tools.ToolsFragment"
-        android:label="@string/menu_tools"
-        tools:layout="@layout/fragment_tools" />
+        android:id="@+id/nav_logout"
+        android:name="com.example.map.ui.logout.LogoutFragment"
+        android:label="로그아웃 / 탈퇴"
+        tools:layout="@layout/fragment_logout" />
 
     <fragment
-        android:id="@+id/nav_share"
-        android:name="com.example.map.ui.share.ShareFragment"
-        android:label="@string/menu_share"
-        tools:layout="@layout/fragment_share" />
+        android:id="@+id/nav_people"
+        android:name="com.example.map.ui.people.PeopleFragment"
+        android:label="만든 사람들"
+        tools:layout="@layout/fragment_people" />
 
     <fragment
-        android:id="@+id/nav_send"
-        android:name="com.example.map.ui.send.SendFragment"
-        android:label="@string/menu_send"
-        tools:layout="@layout/fragment_send" />
+        android:id="@+id/nav_information"
+        android:name="com.example.map.ui.information.InformationFragment"
+        android:label="애플리케이션 정보"
+        tools:layout="@layout/fragment_information" />
 </navigation>
