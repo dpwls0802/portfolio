@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="www.flopo.com.mapper.LocationMapper">
+	<resultMap id="rm4LocationVO"
+		type="www.flopo.com.domain.LocationVO">
+		<id property="bno" column="bno" />
+		<result property="latitude" column="latitude" />
+		<result property="longitude" column="longitude" />
+	</resultMap>
+	
+	<insert id="insert">
+		<!-- 생성된 identifier가 주어진 객체에 자동적으로 채워진다. -->
+		<selectKey keyProperty="bno" resultType="int" order="BEFORE">
+			select seq_location.nextval FROM DUAL
+		</selectKey>
+  		insert into user_location(bno, latitude, longitude)
+		  values(#{bno}, #{latitude,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR})
+	</insert>
+	
+</mapper>
+
+
+
+
+
+
+
+

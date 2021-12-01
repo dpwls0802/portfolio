@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="www.spring.com.framework.fileupload.mapper.AttachMapper">
+	<resultMap id="rm4AttachVO"
+		type="www.spring.com.framework.fileupload.model.AttachVO">
+		<!-- id tag는 DB에서 읽은 정보의 목록화 시 중복 생산 방지를 위해서 내부적으로 검사하는 속성  -->
+		<id property="uuid" column="uuid" />
+		<result property="masterName" column="master_name" />
+		<result property="masterId" column="master_id" />
+		<result property="uploadPath" column="upload_path" />
+		<result property="fileName" column="file_name" />
+		<result property="fileType" column="file_type" />
+	</resultMap>
+
+	<select id="findByMasterId" resultMap="rm4AttachVO">
+		<![CDATA[
+			select * 
+			  from tbl_attach 
+			 where master_id = #{masterId}
+			   and master_name = #{masterName}
+		]]>
+	</select>
+	
+	<select id="getOldFiles" resultMap="rm4AttachVO">
+		<![CDATA[
+			select * 
+			  from tbl_attach 
+			 where upload_path = to_char(sysdate - 1, 'yyyy\mm\dd')
+		]]>
+		<!-- 테스트 종료 이후 sysdate - 1 로 변경하세요 -->
+		<!-- 테스트는 빠르게 하기 위하여 오늘자로 하세요 -->
+	</select>
+	
+	<insert id="insertAttach">
+  		insert into tbl_attach(master_name, uuid, master_id, upload_path, file_name, file_type)
+		  values(#{masterName}, #{uuid}, #{masterId}, #{uploadPath,jdbcType=VARCHAR},
+		   #{fileName,jdbcType=VARCHAR}, #{fileType,jdbcType=CHAR})
+	</insert>
+
+	<delete id="deleteAttach">
+		<![CDATA[
+			delete from tbl_attach 
+			 where uuid=#{uuid}
+			   and master_id = #{masterId}
+			   and master_name = #{masterName}
+		]]>
+	</delete>
+
+	<delete id="deleteAllAttach">
+		<![CDATA[
+			delete from tbl_attach 
+			 where master_id = #{masterId}
+			   and master_name = #{masterName}
+		]]>
+	</delete>
+
+</mapper>
+
+
+
+
+
+
+
+

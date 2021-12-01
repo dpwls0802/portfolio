@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="www.flopo.com.mapper.TimeMapper">
+	<resultMap id="rm4TimeVO"
+		type="www.flopo.com.domain.TimeVO">
+		<id property="bno" column="bno" />
+		<result property="settingTime" column="settingTime" />
+	</resultMap>
+	
+	<insert id="insert">
+		<!-- 생성된 identifier가 주어진 객체에 자동적으로 채워진다. -->
+		<selectKey keyProperty="bno" resultType="int" order="BEFORE">
+			select seq_time.nextval FROM DUAL
+		</selectKey>
+  		insert into user_time(bno, settingTime)
+		  values(#{bno}, #{settingTime,jdbcType=VARCHAR})
+	</insert>
+	
+</mapper>
+
+
+
+
+
+
+
+

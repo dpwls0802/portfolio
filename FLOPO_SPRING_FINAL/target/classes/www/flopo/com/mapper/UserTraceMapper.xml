@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="www.flopo.com.mapper.UserTraceMapper">
+	<resultMap id="rm4LocationVO"
+		type="www.flopo.com.domain.UserTraceVO">
+		<id property="bno" column="bno" />
+		<result property="settingTime" column="settingTime" />
+		<result property="latitude" column="latitude" />
+		<result property="longitude" column="longitude" />
+		<result property="email" column="email" /> 
+		
+	</resultMap>
+	
+	<insert id="insert1">
+		<!-- 생성된 identifier가 주어진 객체에 자동적으로 채워진다. -->
+		<selectKey keyProperty="bno" resultType="int" order="BEFORE">
+			select seq_traceinfo.nextval FROM DUAL
+		</selectKey>
+		MERGE INTO
+			f_traceinfo
+		USING DUAL
+			ON((email = #{email,jdbcType=VARCHAR})and (recodeddate = #{settingTime,jdbcType=DATE})
+			and (areainfo = (select id from f_area where
+    		sw_longitude <![CDATA[<=]]> #{longitude,jdbcType=VARCHAR} and ne_longitude <![CDATA[>=]]> #{longitude,jdbcType=VARCHAR} and
+    		sw_latitude <![CDATA[<=]]> #{latitude,jdbcType=VARCHAR} and ne_latitude<![CDATA[>=]]> #{latitude,jdbcType=VARCHAR}and zoom_lvl <![CDATA[=]]>1 )))
+		WHEN NOT MATCHED THEN 			
+  			insert(bno, recodeddate, email, areainfo)
+		  	values(#{bno}, #{settingTime,jdbcType=DATE}, #{email,jdbcType=VARCHAR},
+		  	(select id from f_area where
+    		sw_longitude <![CDATA[<=]]> #{longitude,jdbcType=VARCHAR} and ne_longitude <![CDATA[>=]]> #{longitude,jdbcType=VARCHAR} and
+    		sw_latitude <![CDATA[<=]]> #{latitude,jdbcType=VARCHAR} and ne_latitude<![CDATA[>=]]> #{latitude,jdbcType=VARCHAR}and zoom_lvl <![CDATA[=]]>1 ))
+	</insert>
+	<insert id="insert3">
+		<!-- 생성된 identifier가 주어진 객체에 자동적으로 채워진다. -->
+		<selectKey keyProperty="bno" resultType="int" order="BEFORE">
+			select seq_traceinfo.nextval FROM DUAL
+		</selectKey>
+		MERGE INTO
+			f_traceinfo
+		USING DUAL
+			ON((email = #{email,jdbcType=VARCHAR})and (recodeddate = #{settingTime,jdbcType=DATE})
+			and (areainfo = (select id from f_area where
+    		sw_longitude <![CDATA[<=]]> #{longitude,jdbcType=VARCHAR} and ne_longitude <![CDATA[>=]]> #{longitude,jdbcType=VARCHAR} and
+    		sw_latitude <![CDATA[<=]]> #{latitude,jdbcType=VARCHAR} and ne_latitude<![CDATA[>=]]> #{latitude,jdbcType=VARCHAR}and zoom_lvl <![CDATA[=]]>3 )))
+		WHEN NOT MATCHED THEN 
+  		insert(bno, recodeddate, email, areainfo)
+		  values(#{bno}, #{settingTime,jdbcType=DATE}, #{email,jdbcType=VARCHAR},
+		  (select id from f_area where
+    		sw_longitude <![CDATA[<=]]> #{longitude,jdbcType=VARCHAR} and ne_longitude <![CDATA[>=]]> #{longitude,jdbcType=VARCHAR} and
+    		sw_latitude <![CDATA[<=]]> #{latitude,jdbcType=VARCHAR} and ne_latitude<![CDATA[>=]]> #{latitude,jdbcType=VARCHAR}and zoom_lvl <![CDATA[=]]>3 ))
+	</insert>
+	<insert id="insert5">
+		<!-- 생성된 identifier가 주어진 객체에 자동적으로 채워진다. -->
+		<selectKey keyProperty="bno" resultType="int" order="BEFORE">
+			select seq_traceinfo.nextval FROM DUAL
+		</selectKey>
+		MERGE INTO
+			f_traceinfo
+		USING DUAL
+			ON((email = #{email,jdbcType=VARCHAR}) and (recodeddate = #{settingTime,jdbcType=DATE} )
+			and (areainfo = (select id from f_area where
+    		sw_longitude <![CDATA[<=]]> #{longitude,jdbcType=VARCHAR} and ne_longitude <![CDATA[>=]]> #{longitude,jdbcType=VARCHAR} and
+    		sw_latitude <![CDATA[<=]]> #{latitude,jdbcType=VARCHAR} and ne_latitude<![CDATA[>=]]> #{latitude,jdbcType=VARCHAR}and zoom_lvl <![CDATA[=]]>5 )))
+		WHEN NOT MATCHED THEN 
+  		insert (bno, recodeddate, email, areainfo)
+		  values(#{bno}, #{settingTime,jdbcType=DATE}, #{email,jdbcType=VARCHAR},
+		  (select id from f_area where
+    		sw_longitude <![CDATA[<=]]> #{longitude,jdbcType=VARCHAR} and ne_longitude <![CDATA[>=]]> #{longitude,jdbcType=VARCHAR} and
+    		sw_latitude <![CDATA[<=]]> #{latitude,jdbcType=VARCHAR} and ne_latitude<![CDATA[>=]]> #{latitude,jdbcType=VARCHAR}and zoom_lvl <![CDATA[=]]>5 ))
+	</insert>
+	
+	<update id="updateTime">
+		<!-- 생성된 identifier가 주어진 객체에 자동적으로 채워진다. -->
+		
+		UPDATE F_USERINFO SET SETDATE =  #{settingTime,jdbcType=DATE} where email=#{email,jdbcType=VARCHAR}
+	</update>
+	
+</mapper>
+
+
+
+
+
+
+
+

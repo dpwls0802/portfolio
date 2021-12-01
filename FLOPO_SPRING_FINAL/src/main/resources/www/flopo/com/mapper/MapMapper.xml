@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="www.flopo.com.mapper.MapMapper">
+
+	<select id="getCurrentScreenAreas" resultType="www.flopo.com.domain.MapVO">
+	<![CDATA[
+	select * from f_area where id> 0
+	and zoom_lvl = #{map_level}
+	and sw_latitude >= #{sw_latitude} - (#{map_level} * 0.001)
+    and sw_longitude >= #{sw_longitude} - (#{map_level} * 0.001)
+    and ne_latitude<=  #{ne_latitude} + (#{map_level} * 0.001)
+    and ne_longitude<= #{ne_longitude} + (#{map_level} * 0.001)
+	]]>
+	</select>
+	
+	<select id="getClickedAreaId" resultType="int">
+	<![CDATA[	
+				select id from f_area
+				where f_area.id> 0
+				and zoom_lvl = #{current_map_level} 
+				and sw_latitude  <= #{clickedAreaLat} 
+			    and sw_longitude <= #{clickedAreaLng}
+			    and ne_latitude  >= #{clickedAreaLat}
+			    and ne_longitude >= #{clickedAreaLng}
+		]]>	
+	</select>
+	
+	<select id="getClickedAreaMale" resultType="int">
+	<![CDATA[	
+				select count(gender) from f_traceinfo inner join f_userinfo on f_traceinfo.email = f_userinfo.email
+				where f_userinfo.gender = 'male' and f_userinfo.setdate = f_traceinfo.recodeddate and f_traceinfo.areainfo=
+				(select id from f_area
+				where f_area.id> 0
+				and zoom_lvl = #{current_map_level} 
+				and sw_latitude  <= #{clickedAreaLat} 
+			    and sw_longitude <= #{clickedAreaLng}
+			    and ne_latitude  >= #{clickedAreaLat}
+			    and ne_longitude >= #{clickedAreaLng})
+		]]>	
+	</select>
+	
+	<select id="getClickedAreaFemale" resultType="int">
+	<![CDATA[	
+				select count(gender) from f_traceinfo inner join f_userinfo on f_traceinfo.email = f_userinfo.email
+				where f_userinfo.gender = 'female' and f_userinfo.setdate = f_traceinfo.recodeddate and f_traceinfo.areainfo=
+				(select id from f_area
+				where f_area.id> 0
+				and zoom_lvl = #{current_map_level} 
+				and sw_latitude  <= #{clickedAreaLat} 
+			    and sw_longitude <= #{clickedAreaLng}
+			    and ne_latitude  >= #{clickedAreaLat}
+			    and ne_longitude >= #{clickedAreaLng})
+		]]>	
+	</select>
+
+
+	<select id="read" resultType="www.flopo.com.domain.MapVO">
+		select * from f_area where id = #{id}
+	</select>
+</mapper>
+

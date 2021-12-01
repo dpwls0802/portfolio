@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/menu_home" />
+        <item
+            android:id="@+id/nav_notice"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="공지사항" />
+
+        <item
+            android:id="@+id/nav_board"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="게시판" />
+
+    </group>
+
+
+    <item android:title="About">
+        <menu>
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="로그아웃 / 탈퇴" />
+            <item
+                android:id="@+id/nav_people"
+                android:icon="@drawable/ic_menu_share"
+                android:title="만든 사람들" />
+            <item
+                android:id="@+id/nav_information"
+                android:icon="@drawable/ic_menu_send"
+                android:title="어플리케이션 정보" />
+        </menu>
+    </item>
+</menu>
