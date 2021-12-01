@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.record.travel.dao.FileMapper">
+	<insert id="addFile">
+		insert into file (fileName, num) 
+		values (#{fileName}, LAST_INSERT_ID())
+	</insert>
+	
+	<select id="getFiles" resultType="string">
+		select fileName 
+			from file
+			where num = #{num}
+			order by writeDate
+	</select>
+	
+	<select id="getOneFile" resultType="string">
+		select fileName 
+			from file
+			where num = #{num}
+			order by writeDate
+			LIMIT 1
+	</select>
+	
+	<delete id="deleteFiles">
+		delete from file where num = #{num}
+	</delete>
+	
+	<delete id="deleteFile">
+		delete from file where fileName = #{fileName}
+	</delete>
+	
+	<insert id="modifyFile">
+		insert into file (fileName, num) values (#{fileName}, #{num})
+	</insert>
+	
+	
+</mapper>

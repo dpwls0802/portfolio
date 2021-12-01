@@ -1,0 +1,34 @@
+create table board(
+	num int not null AUTO_INCREMENT,
+	title varchar(200) not null,
+	content varchar(2000) not null,
+	writer varchar(50) not null,
+	travelDate varchar(50) not null,
+	writeDate	 datetime not null default now(),
+	primary key(num)
+);
+alter table board add column replyCnt int default 0; //댓글 수
+update board set replyCnt = (select count(rnum) from reply where reply.num = board.num);
+alter table board add column viewCnt int default 0;
+
+create table reply(
+    rnum     int not null AUTO_INCREMENT,
+    num      int not null default 0,
+    replyText varchar(1000) not null,
+    replyWriter varchar(50) not null,
+    writeDate datetime not null default now(),
+    updateDate datetime not null default now(),
+    primary key (rnum)
+);
+alter table reply add constraint pk_reply primary key (rnum);
+alter table reply add constraint fk_reply_board
+foreign key (num) references board (num);
+
+create table file(
+   fileName varchar(150) not null,
+   num int not null,
+   writeDate datetime not null default now(),
+   primary key(fileName)
+);
+alter table file add constraint fk_file foreign key (num) references board (num);
+alter table file add column fileCnt int default 0;

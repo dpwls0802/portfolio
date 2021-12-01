@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>멤버만 접근 가능</h1>
+<!-- <h2>test : <span th:text="${aa}"></span></h2> -->
+<div sec:authorize="hasRole('USER')"> 사용자 권한 가짐</div>
+<div sec:authorize="hasRole('MANAGER')"> 매니저 권한 가짐</div>
+<div sec:authorize="hasRole('ADMIN')"> 관리자 권한 가짐</div>
+
+<div sec:authorize = "isAuthenticated()">
+	인증받은 사용자만 이 문장을 볼 수 있습니다.
+</div>
+
+인증받은 사용자 이름 : <div sec:authentication="name"></div>
+인증받은 사용자 권한 : <div sec:authentication="principal.authorities"></div>
+</body>
+</html>
