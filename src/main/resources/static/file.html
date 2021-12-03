@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Travel Record</title>
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/jqvmap/1.5.1/jqvmap.min.css">
+
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jqvmap/1.5.1/jquery.vmap.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jqvmap/1.5.1/maps/jquery.vmap.world.js"></script>
+</head>
+
+<body>
+	<h1 style="text-align: center;">Travel Record</h1>
+	<div id="vmap" style="margin: 0 auto; width: 80%; height: 520px;"></div>
+
+	<script type="text/javascript">
+      var countries = '';
+      
+      function getCountryData(){
+        $.ajax({
+          url:"countries.json",
+          type:'get',
+          datatype:'json',
+          success:function(res){
+          	countries = JSON.parse(res);
+          	console.log("성공!!");
+          	alert("success");
+          }
+        });
+      }
+      
+      getCountryData();
+      
+      $(document).ready(function(){
+        $("#vmap").vectorMap({
+          map: 'world_en',
+          backgroundColor:'#bdbdbd',
+          borderColor:'#555',
+          color:'#ffffff',
+          hoverOpacity:0.7,
+          selectedColor:'#666666',
+          enableZoom:true,
+          enableDrag:true,
+          showTooltip:true,
+          normalizeFunction:'polynomial',
+          
+          onLabelShow:function(event,label,code){
+            code = code.toUpperCase();
+            country_name = countries[code];
+            label.html('<strong>'+country_name+'</strong>');
+          }
+        });
+      });
+    </script>
+</body>

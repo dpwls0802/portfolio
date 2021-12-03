@@ -1,0 +1,26 @@
+
+body{
+	margin-top:20px;
+	background-color: #f2f2f2;
+	height:100%;
+	
+}
+nav {
+	margin-bottom:20px;
+}
+
+svg path {
+	fill:#bcbcbc;
+	stroke: #000000;
+	stroke-width: .25;
+	
+	/* position:absolute; */
+	
+}
+
+svg path:hover {
+	fill : #a0a0a0;
+	transition : 0.6s;
+	cursor : pointer;
+}
+
